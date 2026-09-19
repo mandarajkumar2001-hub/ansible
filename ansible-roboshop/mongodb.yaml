@@ -1,5 +1,14 @@
-- - name: ping the server
-  hosts:frontend 
-  task:
-  -name: ping the server
-   ansible.builtin.ping:
+- name: configuring mongodb server
+  become: yes
+  hosts: mongodb
+  tasks:
+  - name: copy mongodb repo
+    ansible.builtin.copy:
+      src: mongo.repo
+      dest: /etc/yum.repos.d/mongo.repo
+
+  - name: instal mongodb
+    anisble.builtin.dnf:
+      name: mongodb-org
+      state: present
+      
